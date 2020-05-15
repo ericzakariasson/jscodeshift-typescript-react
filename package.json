@@ -19,7 +19,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "transform": "yarn jscodeshift -t transforms/update-old-button-to-new-button.ts transforms/__testfixtures__/update-old-button-to-new-button/basic.input.tsx --dry --print"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,5 +36,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/jscodeshift": "^0.7.1",
+    "jscodeshift": "^0.9.0"
   }
 }
