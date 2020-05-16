@@ -5,23 +5,18 @@ const transform: Transform = (file, api, options) => {
 
   const root = j(file.source);
 
-  root
-    .findJSXElementsByModuleName("Button")
-    .find(j.JSXAttribute, {
-      name: {
-        type: "JSXIdentifier",
-        name: "color",
-      },
-      value: {
-        type: "StringLiteral",
-        value: "primary",
-      },
-    })
-    .find(j.JSXIdentifier)
-    .replaceWith((nodePath) => {
-      const { node } = nodePath;
-      return j.jsxExpressionContainer(j.identifier("appearance"));
-    });
+  /**
+   * TODO: Find button import by value and not position
+   */
+  const BUTTON_IMPORT = root.find(j.ImportDeclaration).at(1);
+
+  BUTTON_IMPORT.replaceWith(
+    j.importDeclaration(
+      [j.importSpecifier(j.identifier("NewButton"))],
+      j.stringLiteral("../../../src/components/NewButton"),
+      "value"
+    )
+  );
 
   return root.toSource();
 };
